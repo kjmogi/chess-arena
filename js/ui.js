@@ -6,8 +6,28 @@
   const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
   const GLYPH = { k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟' };
-  const glyph = p => GLYPH[p.toLowerCase()] + '︎';
-  const pieceHTML = p => `<span class="pc ${C.colorOf(p)}">${glyph(p)}</span>`;
+  /* 기물 그림 (SVG, 45×45). 글꼴에 따라 흑백이 똑같이 보이는 기기가 있어서 글자 대신 그림으로 그린다.
+     F = 몸통 색, S = 테두리 색, D = 장식선 색 */
+  const BASE = 'M10 39.5h25a1.5 1.5 0 0 0 1.5-1.5v-1.5a1.5 1.5 0 0 0-1.5-1.5H10a1.5 1.5 0 0 0-1.5 1.5V38a1.5 1.5 0 0 0 1.5 1.5z';
+  const SHAPES = {
+    p: `<path d="M15.5 35c0-6 3-9.5 5-11h4c2 1.5 5 5 5 11z" fill="F"/><circle cx="22.5" cy="16.5" r="5.5" fill="F"/><path d="M18 24h9" stroke="S"/><path d="${BASE}" fill="F"/>`,
+    r: `<path d="M13 9.5h4v3h3.5v-3h4v3H28v-3h4v7l-3 2.5V31l2.5 4h-18L16 31V19l-3-2.5z" fill="F"/><path d="M16 19h13M16 31h13" stroke="D"/><path d="${BASE}" fill="F"/>`,
+    n: `<path d="M14 35c0-5.5 2.5-8 5.5-11.5-2.5.5-4.5 1.5-6 3.5l-3-2.5c1-5 4-9 7.5-11.5L17.5 8l3.5 2.5C28 10 32.5 16 32.5 25v10z" fill="F"/><circle cx="18.5" cy="16.5" r="1.4" fill="D" stroke="none"/><path d="M28 18c1 3 1.3 7 1 11" stroke="D"/><path d="${BASE}" fill="F"/>`,
+    b: `<circle cx="22.5" cy="8" r="2.6" fill="F"/><path d="M22.5 10.5c-5 3.5-7.5 8-7.5 12 0 3.5 2.5 6 7.5 6s7.5-2.5 7.5-6c0-4-2.5-8.5-7.5-12z" fill="F"/><path d="M15 32.5c2.5-1.5 5-2 7.5-2s5 .5 7.5 2l1 2.5H14z" fill="F"/><path d="M22.5 16v6M19.5 19h6" stroke="D"/><path d="${BASE}" fill="F"/>`,
+    q: `<path d="M11.5 31 9 14l6.5 9 2-12.5 5 11.5 5-11.5 2 12.5 6.5-9-2.5 17z" fill="F"/><circle cx="9" cy="12.5" r="2" fill="F"/><circle cx="17.5" cy="9" r="2" fill="F"/><circle cx="27.5" cy="9" r="2" fill="F"/><circle cx="36" cy="12.5" r="2" fill="F"/><path d="M11.5 31h22l1 4h-24z" fill="F"/><path d="M12.5 31h20" stroke="D"/><path d="${BASE}" fill="F"/>`,
+    k: `<path d="M22.5 4v8M18.5 7.5h8" stroke="S" stroke-width="2.2"/><path d="M22.5 13c-2.5 0-4 2-4 4 0 1 .3 2 .8 2.8C14 20 11 23.5 11 27.5c0 2 .7 3.5 1.5 4.5h20c.8-1 1.5-2.5 1.5-4.5 0-4-3-7.5-8.3-7.7.5-.8.8-1.8.8-2.8 0-2-1.5-4-4-4z" fill="F"/><path d="M12.5 32h20l1.5 3H11z" fill="F"/><path d="M14 26.5h17" stroke="D"/><path d="${BASE}" fill="F"/>`
+  };
+  const PIECE_COLORS = { w: ['#fbf7ee', '#1f1d1b', '#8b7f6c'], b: ['#2b2724', '#0d0c0b', '#d9cfbd'] };
+  function pieceSVG(p) {
+    const col = C.colorOf(p), [F, S, D] = PIECE_COLORS[col];
+    const body = SHAPES[p.toLowerCase()].replace(/"F"/g, `"${F}"`).replace(/"S"/g, `"${S}"`).replace(/"D"/g, `"${D}"`);
+    return `<svg class="pc ${col}" viewBox="0 0 45 45" aria-hidden="true"><g stroke="${S}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" fill="none">${body}</g></svg>`;
+  }
+  const pieceHTML = pieceSVG;
+  // 정적 HTML 의 <span data-piece="K"> 자리에 그림 채우기 (로고 등)
+  document.addEventListener('DOMContentLoaded', () => {
+    $$('[data-piece]').forEach(el => { el.innerHTML = pieceSVG(el.dataset.piece); });
+  });
 
   const TIER_PIECE = { placement: 'p', bronze: 'p', silver: 'n', gold: 'b', platinum: 'r', diamond: 'q', champion: 'k', ai: 'n' };
   function emblem(tier, size) {

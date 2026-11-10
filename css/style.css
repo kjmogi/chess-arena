@@ -12,8 +12,8 @@
   --go: #7fdc8a;
   --warn: #ff9a7a;
   --danger: #e2574c;
-  --light-sq: #efdab6;
-  --dark-sq: #b28761;
+  --light-sq: #f0dcb4;
+  --dark-sq: #9a6640;
   --radius: 14px;
   --font: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
   --piece-font: 'Segoe UI Symbol', 'Noto Sans Symbols 2', 'DejaVu Sans', 'Arial Unicode MS', serif;
@@ -88,7 +88,7 @@ textarea { resize: vertical; font-family: ui-monospace, Consolas, monospace; fon
   padding: 10px 16px; background: rgba(23,32,27,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
 }
 .brand { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 17px; }
-.brand .pc { font-size: 24px; }
+.brand .pc-ico { font-size: 26px; }
 .top-me { margin-left: auto; display: flex; align-items: center; gap: 6px; font-weight: 600; }
 .g-title { flex: 1; text-align: center; font-weight: 700; }
 .admin-top .admin-class { margin-left: auto; }
@@ -171,9 +171,10 @@ textarea { resize: vertical; font-family: ui-monospace, Consolas, monospace; fon
 .emblem { flex: none; filter: drop-shadow(0 2px 3px rgba(0,0,0,.35)); }
 
 /* 체스 기물 */
-.pc { font-family: var(--piece-font); line-height: 1; display: inline-block; user-select: none; }
-.pc.w { color: #fbf8f1; text-shadow: 0 0 1px #000, 0 0 1px #000, 0 1px 1px #000, 1px 0 1px #000, -1px 0 1px #000, 0 -1px 1px #000, 0 3px 4px rgba(0,0,0,.35); }
-.pc.b { color: #1c1a19; text-shadow: 0 0 1px rgba(255,255,255,.55), 0 2px 3px rgba(0,0,0,.35); }
+.pc { display: inline-block; width: 1em; height: 1em; flex: none; user-select: none; pointer-events: none; overflow: visible; }
+.pc.w { filter: drop-shadow(0 1.5px 1.5px rgba(0,0,0,.35)); }
+.pc.b { filter: drop-shadow(0 1.5px 1.5px rgba(0,0,0,.3)); }
+.pc-ico { display: inline-flex; }
 
 /* 체스판 */
 .board {
@@ -184,7 +185,7 @@ textarea { resize: vertical; font-family: ui-monospace, Consolas, monospace; fon
 .sq { position: relative; display: flex; align-items: center; justify-content: center; }
 .sq.light { background: var(--light-sq); }
 .sq.dark { background: var(--dark-sq); }
-.sq .pc { font-size: 10.2cqw; position: relative; z-index: 2; transition: transform .1s; }
+.sq .pc { width: 96%; height: 96%; position: relative; z-index: 2; transition: transform .1s; }
 .sq.mine { cursor: pointer; }
 .sq.mine:hover .pc { transform: scale(1.07); }
 .sq.last::before { content: ''; position: absolute; inset: 0; background: rgba(255, 214, 64, .42); }
@@ -215,7 +216,7 @@ textarea { resize: vertical; font-family: ui-monospace, Consolas, monospace; fon
 .chip { width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex: none; border: 1px solid #000; }
 .chip.w { background: #f6f2e8; } .chip.b { background: #222; border-color: #777; }
 .caps { display: flex; align-items: center; flex-wrap: wrap; min-height: 16px; }
-.caps .pc { font-size: 15px; margin-right: -3px; }
+.caps .pc { width: 17px; height: 17px; margin-right: -3px; }
 .caps em { font-style: normal; font-size: 12px; color: var(--muted); margin-left: 8px; }
 .pc-timer {
   font-variant-numeric: tabular-nums; font-weight: 800; font-size: 20px; padding: 6px 10px; border-radius: 8px;
