@@ -190,8 +190,8 @@ textarea { resize: vertical; font-family: ui-monospace, Consolas, monospace; fon
 .sq.last::before { content: ''; position: absolute; inset: 0; background: rgba(255, 214, 64, .42); }
 .sq.sel::before { content: ''; position: absolute; inset: 0; background: rgba(95, 200, 120, .55); }
 .sq.check::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, rgba(255,40,30,.85) 0%, rgba(255,40,30,.35) 45%, transparent 72%); z-index: 1; }
-.sq.dot { cursor: pointer; }
-.sq.dot::after { content: ''; position: absolute; width: 30%; height: 30%; border-radius: 50%; background: rgba(20, 60, 30, .38); z-index: 3; }
+.sq.tgt { cursor: pointer; }
+.sq.tgt::after { content: ''; position: absolute; width: 30%; height: 30%; border-radius: 50%; background: rgba(20, 60, 30, .38); z-index: 3; }
 .sq.cap { cursor: pointer; }
 .sq.cap::after { content: ''; position: absolute; inset: 4%; border-radius: 50%; border: 0.9cqw solid rgba(20, 60, 30, .45); z-index: 3; }
 .sq i { position: absolute; font-style: normal; font-weight: 700; font-size: 2.1cqw; z-index: 1; }

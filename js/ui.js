@@ -96,7 +96,7 @@
         if (last && (sq === last.from || sq === last.to)) cls.push('last');
         if (sq === this.sel) cls.push('sel');
         if (sq === checkSq) cls.push('check');
-        if (tset.has(sq)) cls.push(b[sq] || tset.get(sq).flag === 'ep' ? 'cap' : 'dot');
+        if (tset.has(sq)) cls.push(b[sq] || tset.get(sq).flag === 'ep' ? 'cap' : 'tgt');
         if (this.canAct() && b[sq] && C.colorOf(b[sq]) === this.myColor) cls.push('mine');
         let coord = '';
         if (d % 8 === 0) coord += `<i class="rk">${8 - r}</i>`;
